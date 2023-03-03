@@ -1,0 +1,71 @@
+SQL> create table r1
+  2  (
+  3  first_name varchar2(20),
+  4  last_name varchar2(20),
+  5  salary number(10)
+  6  );
+
+Table created.
+
+SQL> create table r2
+  2  (
+  3  last_name varchar2(20),
+  4  age number(10),
+  5  mail varchar2(10)
+  6  );
+
+Table created.
+
+
+SQL> insert into r1 values(&a,&b,&c);
+Enter value for a: 'ganga'
+Enter value for b: 'varalakshmi'
+Enter value for c: 50000
+old   1: insert into r1 values(&a,&b,&c)
+new   1: insert into r1 values('ganga','varalakshmi',50000)
+
+1 row created.
+
+SQL> /
+Enter value for a: 'jaanu'
+Enter value for b: 'kumar'
+Enter value for c: 30000
+old   1: insert into r1 values(&a,&b,&c)
+new   1: insert into r1 values('jaanu','kumar',30000)
+
+1 row created.
+
+SQL> select * from r1;
+
+FIRST_NAME           LAST_NAME                SALARY
+-------------------- -------------------- ----------
+ganga                varalakshmi               50000
+jaanu                kumar                     30000
+
+SQL> insert into r2 values(&a,&b,&c);
+Enter value for a: 'ajay'
+Enter value for b: 22
+Enter value for c: 'ajay'
+old   1: insert into r2 values(&a,&b,&c)
+new   1: insert into r2 values('ajay',22,'ajay')
+
+1 row created.
+
+SQL> /
+Enter value for a: 'varshi'
+Enter value for b: 21
+Enter value for c: 'varshi'
+old   1: insert into r2 values(&a,&b,&c)
+new   1: insert into r2 values('varshi',21,'varshi')
+
+1 row created.
+
+SQL> select * from r2;
+
+LAST_NAME                   AGE MAIL
+-------------------- ---------- ----------
+ajay                         22 ajay
+varshi                       21 varshi
+
+SQL> select first_name,salary,age from r1,r2 where r1.last_name=r2.last_name;
+//it displays the lastname where r1 lastname is equals to lastname in r2
