@@ -1,0 +1,51 @@
+SQL> create table cab
+  2  (
+  3  id number(4),
+  4  license_plate varchar2(20),
+  5  car_model_id number(9),
+  6  manufact_year number(15),
+  7  primary key (id),
+  8  unique(license_plate)
+  9  );
+
+SQL> create table driver
+  2  (
+  3  id number(4),
+  4  name varchar2(20),
+  5  dob date,
+  6  driving_license varchar2(20),
+  7  foreign key (id) references cab(id)
+  8  );
+
+Table created.
+
+ desc cab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(4)
+ LICENSE_PLATE
+   VARCHAR2(20)
+ CAR_MODEL_ID
+   NUMBER(9)
+ MANUFACT_YEAR
+SQL> MBER(15)
+SQL>
+SQL> desc table cab;
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> desc cab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(4)
+ LICENSE_PLATE                                      VARCHAR2(20)
+ CAR_MODEL_ID                                       NUMBER(9)
+ MANUFACT_YEAR                                      NUMBER(15)
+
+SQL> desc driver;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(4)
+ NAME                                               VARCHAR2(20)
+ DOB                                                DATE
+ DRIVING_LICENSE                                    VARCHAR2(20)
+
+SQL>
