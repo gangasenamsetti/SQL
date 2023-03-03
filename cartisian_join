@@ -1,0 +1,6 @@
+**returns all the rows from both tables which satisfies the join condition along with rows which donot satisfy join condition.
+**if it has m rows in r1 and n rows in r2 it display total m*n rows
+
+
+ select * from r1,r2 where r1.last_name=r2.last_name(+);
+ 
