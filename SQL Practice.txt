@@ -1,0 +1,620 @@
+SQL [Structured Query Language]
+SQL commands are classified into the following catagerioes
+
+ -> DDL [Data Definition Language]
+	 Create, Alter, Drop, Truncate
+	 
+ -> DML [Data Manipulation Language]
+	 Insert, Update, DELETE
+	 
+ -> DCL [Data Control Language]
+	 Grant, Revoke
+	 
+ -> TCL [Transaction Control Language]
+     Commit, Savepoint, Rollback
+	 
+ -> Select
+	
+ 
+1) Database Creation:
+   Syntax
+	CREATE DATABASE databasename;
+   
+   Ex:
+      create database test;
+	  
+   use test;
+   Database changed.
+
+2) Table Creation:
+   Syntax:
+	CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+	....
+	);
+	
+	
+datatype: It tells about what type of values are stored in the field.
+MySQL:					Oracle
+int(3)					Number(2)
+Integer(3)
+
+float()
+Decimal(size,d)
+
+char(20)  		-> Size is fixed
+varchar(20)		-> Variable length character.
+
+CLOB -> Character Large Object
+BLOB -> Binary Large Object [Images, audio, video ...]
+date 
+etc......
+
+create table Course(cid int(3) primary key,cname varchar(20),fees int(5));
+
+create table student(sid varchar(10),sname varchar(20),branch varchar(5), email varchar(20),cid int(3) references course(cid));
+
+3) INSERT Statement:
+   Syntax:
+   INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
+   
+ mysql> insert into student values('21A91A0535','Ramesh K','CSE','ramesh@gmail.com',101);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values('21A91A0425','Rajani','ECE','rajani@gmail.com',101);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values('21A91A0429','Ramya G','ECE','ramya@gmail.com',101);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values('21A91A0455','Raghava','ECE','raghava@gmail.com',102);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values('21A91A0555','Sriram','CSE','sriram@gmail.com',102);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values('21MH1A0555','Bhavani','CSE','bhavani@gmail.com',102);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values('21P31A1254','Ganesh S','IT','ganesh@gmail.com',103);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------------+----------+--------+-------------------+------+
+| sid        | sname    | branch | email             | cid  |
++------------+----------+--------+-------------------+------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 |
++------------+----------+--------+-------------------+------+
+7 rows in set (0.00 sec)
+  
+
+Display all the students information along with their course infromation.
+mysql> select sid,sname,branch, email,student.cid, cname, fees from student,course where student.cid=course.cid;
++------------+----------+--------+-------------------+------+------------+-------+
+| sid        | sname    | branch | email             | cid  | cname      | fees  |
++------------+----------+--------+-------------------+------+------------+-------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 | Salesforce | 19000 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 | Salesforce | 19000 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 | Salesforce | 19000 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 | AWS        | 24000 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 | AWS        | 24000 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 | AWS        | 24000 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 | Fullstack  | 24000 |
++------------+----------+--------+-------------------+------+------------+-------+
+
+
+4) UPDATE Statement:
+   Syntax:
+   UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;
+   
+mysql> update course set fees=24000 where cid=101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-----+-------------+-------+
+| cid | cname       | fees  |
++-----+-------------+-------+
+| 101 | Salesforce  | 24000 |
+| 102 | AWS         | 24000 |
+| 103 | Fullstack   | 24000 |
+| 104 | Service Now | 24000 |
++-----+-------------+-------+
+4 rows in set (0.00 sec)
+
+   
+5) DELETE Statement:
+   Syntax:
+   DELETE FROM table_name WHERE condition;
+   Ex;
+    delete from student; 	// It deletes all the rows
+	delete from student where sid='21A91A0425';
+	
+	
+   
+6) SELECT Statement:
+   Syntax
+	SELECT column1, column2, ... FROM table_name;
+	SELECT * from table_name;
+	SELECT * from table_name WHERE condition;
+	
+	
+
+7) SELECT DISTINCT Statement:
+   The SELECT DISTINCT statement is used to return only distinct (different) values.
+   Syntax:
+	SELECT DISTINCT column1, column2, ...FROM table_name;
+   
+mysql> select distinct(branch) from student;
++--------+
+| branch |
++--------+
+| CSE    |
+| ECE    |
+| IT     |
++--------+
+   
+   
+8) ORDER BY Keyword:
+   The ORDER BY keyword is used to sort the result-set in ascending or descending order.
+   Syntax:
+	SELECT column1, column2, ...
+	FROM table_name
+	ORDER BY column1, column2, ... ASC|DESC;
+	
+	mysql> select * from student order by sname;
++------------+----------+--------+-------------------+------+
+| sid        | sname    | branch | email             | cid  |
++------------+----------+--------+-------------------+------+
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 |
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 |
++------------+----------+--------+-------------------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student order by sname desc;
++------------+----------+--------+-------------------+------+
+| sid        | sname    | branch | email             | cid  |
++------------+----------+--------+-------------------+------+
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 |
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 |
++------------+----------+--------+-------------------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student order by branch,sid;
++------------+----------+--------+-------------------+------+
+| sid        | sname    | branch | email             | cid  |
++------------+----------+--------+-------------------+------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 |
++------------+----------+--------+-------------------+------+
+7 rows in set (0.00 sec)
+
+9) NULL Value:
+   A field with a NULL value is a field with no value.
+   It is not possible to test for NULL values with comparison operators, such as =, <, or <>. We will have to use the IS NULL and IS NOT NULL operators instead.
+   IS NULL Syntax:
+	SELECT column_names
+	FROM table_name
+	WHERE column_name IS NULL;
+ 
+   IS NOT NULL Syntax:
+	SELECT column_names
+	FROM table_name
+	WHERE column_name IS NOT NULL;
+	
+mysql> insert into student (sid,sname,branch,email) values('21A91A0355','RS Sing','MECH','sing@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student (sid,sname,branch,email) values('21A91A1263','Sudhir','IT','sudhir@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------------+----------+--------+-------------------+------+
+| sid        | sname    | branch | email             | cid  |
++------------+----------+--------+-------------------+------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 |
+| 21A91A0355 | RS Sing  | MECH   | sing@gmail.com    | NULL |
+| 21A91A1263 | Sudhir   | IT     | sudhir@gmail.com  | NULL |
++------------+----------+--------+-------------------+------
+
+mysql> select * from student where cid is NULL;
++------------+---------+--------+------------------+------+
+| sid        | sname   | branch | email            | cid  |
++------------+---------+--------+------------------+------+
+| 21A91A0355 | RS Sing | MECH   | sing@gmail.com   | NULL |
+| 21A91A1263 | Sudhir  | IT     | sudhir@gmail.com | NULL |
++------------+---------+--------+------------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where cid is Not NULL;
++------------+----------+--------+-------------------+------+
+| sid        | sname    | branch | email             | cid  |
++------------+----------+--------+-------------------+------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 |
++------------+----------+--------+-------------------+------+	
+10)LIKE Operator
+   The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+   Syntax
+	SELECT column1, column2, ...
+	FROM table_name
+	WHERE columnN LIKE pattern;
+	There are two wildcards often used in conjunction with the LIKE operator:
+		The percent sign (%) represents zero, one, or multiple characters
+		The underscore sign (_) represents one, single character
+	
+mysql> select * from student where sname like 'R%';
++------------+----------+--------+-------------------+------+
+| sid        | sname    | branch | email             | cid  |
++------------+----------+--------+-------------------+------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 |
+| 21A91A0355 | RS Sing  | MECH   | sing@gmail.com    | NULL |
++------------+----------+--------+-------------------+------+
+5 rows in set (0.00 sec)
+
+Display all the records whose branch name contains only 2 characters.
+mysql> select * from student where branch like '__';
++------------+----------+--------+------------------+------+
+| sid        | sname    | branch | email            | cid  |
++------------+----------+--------+------------------+------+
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com |  103 |
+| 21A91A1263 | Sudhir   | IT     | sudhir@gmail.com | NULL |
++------------+----------+--------+------------------+------+
+2 rows in set (0.00 sec)
+
+
+11)AND, OR and NOT Operators:
+   The WHERE clause can be combined with AND, OR, and NOT operators.
+   The AND and OR operators are used to filter records based on more than one condition.
+   Syntax:
+	SELECT column1, column2, ...
+	FROM table_name
+	WHERE condition1 AND condition2 AND condition3 ...;
+   
+   
+12)IN, ANY and ALL Operator
+   The IN operator allows you to specify multiple values in a WHERE clause.
+   Syntax:
+	SELECT column_name(s)
+	FROM table_name
+	WHERE column_name IN (value1, value2, ...);
+	
+	SELECT column_name(s)
+	FROM table_name
+	WHERE column_name IN (SELECT STATEMENT);
+
+    SELECT column_name(s)
+	FROM table_name
+	WHERE column_name operator ANY
+	(SELECT column_name FROM table_name WHERE condition);
+	
+	
+	
+13) BETWEEN Operator
+    Syntax:
+	SELECT column_name(s)
+	FROM table_name
+	WHERE column_name BETWEEN value1 AND value2;
+mysql> select * from course where cid between 101 and 103;
++-----+------------+-------+
+| cid | cname      | fees  |
++-----+------------+-------+
+| 101 | Salesforce | 24000 |
+| 102 | AWS        | 24000 |
+| 103 | Fullstack  | 24000 |
++-----+------------+-------+
+3 rows in set (0.00 sec)
+
+
+14) Aggregate Functions:
+    min(), max(), avg(), sum() and count()
+	Syntax:
+	 SELECT fun(column_name)
+	 FROM table_name
+	 WHERE condition;
+   
+   mysql> select min(cid) from student;
++----------+
+| min(cid) |
++----------+
+|      101 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select max(cid) from student;
++----------+
+| max(cid) |
++----------+
+|      103 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(fees) from course;
++-----------+
+| sum(fees) |
++-----------+
+|     96000 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(fees) from course;
++------------+
+| avg(fees)  |
++------------+
+| 24000.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(branch) from student;
++---------------+
+| count(branch) |
++---------------+
+|             9 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count(cid) from student;
++------------+
+| count(cid) |
++------------+
+|          7 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|        9 |
++----------+
+1 row in set (0.04 sec)
+
+mysql>
+
+   
+
+15) GROUP BY Statement
+	The GROUP BY statement groups rows that have the same values into summary rows, like "find the number of customers in each country".
+
+	The GROUP BY statement is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+	Syntax:
+	 SELECT column_name(s)
+	 FROM table_name
+	 WHERE condition
+	 GROUP BY column_name(s)
+	 ORDER BY column_name(s);
+
+mysql> select branch, count(*) from student group by branch;
++--------+----------+
+| branch | count(*) |
++--------+----------+
+| CSE    |        3 |
+| ECE    |        3 |
+| IT     |        2 |
+| MECH   |        1 |
++--------+----------+
+4 rows in set (0.00 sec)
+	
+	
+	
+16) HAVING Clause
+	HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+	Syntax
+	SELECT column_name(s)
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s)
+	HAVING condition
+	ORDER BY column_name(s);
+	
+mysql> select branch,count(*) from student group by branch having count(*)>2;
++--------+----------+
+| branch | count(*) |
++--------+----------+
+| CSE    |        3 |
+| ECE    |        3 |
++--------+----------+
+2 rows in set (0.00 sec)
+
+	
+17) JOINS:
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+	
+	1) INNER JOIN Keyword
+	   The INNER JOIN keyword selects records that have matching values in both tables.
+	   Syntax
+		SELECT column_name(s)
+		FROM table1	INNER JOIN table2
+		ON table1.column_name = table2.column_name;
+		
+	2) LEFT JOIN Keyword
+	   The LEFT JOIN keyword returns all records from the left table (table1), and the matching records from the right table (table2). The result is 0 records from the right side, if there is no match.
+	   Syntax
+		SELECT column_name(s)
+		FROM table1	LEFT JOIN table2
+		ON table1.column_name = table2.column_name;
+		
+		
+	3) RIGHT JOIN Keyword
+	   The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1). The result is 0 records from the left side, if there is no match.
+	   Syntax
+		SELECT column_name(s)
+		FROM table1 RIGHT JOIN table2
+		ON table1.column_name = table2.column_name;
+		
+		
+	4) FULL OUTER JOIN Keyword
+	   The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table records.
+	   Syntax
+		SELECT column_name(s)
+		FROM table1	FULL OUTER JOIN table2
+		ON table1.column_name = table2.column_name
+		WHERE condition;
+		
+mysql> select sid, sname,branch, email, student.cid,cname,fees from student Inner Join course on student.cid=course.cid;
++------------+----------+--------+-------------------+------+------------+-------+
+| sid        | sname    | branch | email             | cid  | cname      | fees  |
++------------+----------+--------+-------------------+------+------------+-------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 | Salesforce | 24000 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 | Salesforce | 24000 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 | Salesforce | 24000 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 | AWS        | 24000 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 | AWS        | 24000 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 | AWS        | 24000 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 | Fullstack  | 24000 |
++------------+----------+--------+-------------------+------+------------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select sid, sname,branch, email, student.cid,cname,fees from student left outer join course on student.cid=course.cid;
++------------+----------+--------+-------------------+------+------------+-------+
+| sid        | sname    | branch | email             | cid  | cname      | fees  |
++------------+----------+--------+-------------------+------+------------+-------+
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 | Salesforce | 24000 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 | Salesforce | 24000 |
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 | Salesforce | 24000 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 | AWS        | 24000 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 | AWS        | 24000 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 | AWS        | 24000 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 | Fullstack  | 24000 |
+| 21A91A0355 | RS Sing  | MECH   | sing@gmail.com    | NULL | NULL       |  NULL |
+| 21A91A1263 | Sudhir   | IT     | sudhir@gmail.com  | NULL | NULL       |  NULL |
++------------+----------+--------+-------------------+------+------------+-------+
+9 rows in set (0.00 sec)
+
+mysql> select sid, sname,branch, email, student.cid,cname,fees from student right outer join course on student.cid=course.cid;
++------------+----------+--------+-------------------+------+-------------+-------+
+| sid        | sname    | branch | email             | cid  | cname       | fees  |
++------------+----------+--------+-------------------+------+-------------+-------+
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   |  101 | Salesforce  | 24000 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  |  101 | Salesforce  | 24000 |
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  |  101 | Salesforce  | 24000 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com |  102 | AWS         | 24000 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  |  102 | AWS         | 24000 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com |  102 | AWS         | 24000 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  |  103 | Fullstack   | 24000 |
+| NULL       | NULL     | NULL   | NULL              | NULL | Service Now | 24000 |
++------------+----------+--------+-------------------+------+-------------+-------+
+8 rows in set (0.01 sec)
+
+mysql> select sid, sname,branch, email, course.cid,cname,fees from student right outer join course on student.cid=course.cid;
++------------+----------+--------+-------------------+-----+-------------+-------+
+| sid        | sname    | branch | email             | cid | cname       | fees  |
++------------+----------+--------+-------------------+-----+-------------+-------+
+| 21A91A0429 | Ramya G  | ECE    | ramya@gmail.com   | 101 | Salesforce  | 24000 |
+| 21A91A0425 | Rajani   | ECE    | rajani@gmail.com  | 101 | Salesforce  | 24000 |
+| 21A91A0535 | Ramesh K | CSE    | ramesh@gmail.com  | 101 | Salesforce  | 24000 |
+| 21MH1A0555 | Bhavani  | CSE    | bhavani@gmail.com | 102 | AWS         | 24000 |
+| 21A91A0555 | Sriram   | CSE    | sriram@gmail.com  | 102 | AWS         | 24000 |
+| 21A91A0455 | Raghava  | ECE    | raghava@gmail.com | 102 | AWS         | 24000 |
+| 21P31A1254 | Ganesh S | IT     | ganesh@gmail.com  | 103 | Fullstack   | 24000 |
+| NULL       | NULL     | NULL   | NULL              | 104 | Service Now | 24000 |
++------------+----------+--------+-------------------+-----+-------------+-------+
+8 rows in set (0.00 sec)
+
+
+		
+18) UNION Operator
+	The UNION operator is used to combine the result-set of two or more SELECT statements.
+		Every SELECT statement within UNION must have the same number of columns
+		The columns must also have similar data types
+		The columns in every SELECT statement must also be in the same order
+	Syntax
+		SELECT column_name(s) FROM table1
+		UNION
+		SELECT column_name(s) FROM table2;
+
+
+
+Constraints:
+------------
+SQL constraints are used to specify rules for the data in a table.
+Constraints are used to limit the type of data that can go into a table. This ensures the accuracy and reliability of the data in the table. If there is any violation between the constraint and the data action, the action is aborted.
+
+The following constraints are commonly used in SQL:
+
+	NOT NULL - Ensures that a column cannot have a NULL value
+	UNIQUE - Ensures that all values in a column are different
+	PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each 
+				  row in a table
+	FOREIGN KEY - Prevents actions that would destroy links between tables
+	CHECK - Ensures that the values in a column satisfies a specific condition
+	DEFAULT - Sets a default value for a column if no value is specified
+	CREATE INDEX - Used to create and retrieve data from the database very quickly
+
+
+GRANT:
+	Syntax:
+	grant privilege_name on object_name
+	to {user_name | public | role_name} 
+	   
+	   
+REVOKE:
+    Syntax:
+	revoke privilege_name on object_name
+	from {user_name | public | role_name}
+   
+   
+ALTER TABLE table_name
+ADD column_name datatype;
+
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+ALTER TABLE table_name
+MODIFY COLUMN column_name datatype;
+
+
+
+select * from employee where condition =(select * from ....);
+
+SELECT job_id,AVG(salary) 
+FROM employees   
+GROUP BY job_id   
+HAVING AVG(salary)<           
+(SELECT MAX(AVG(min_salary))            
+FROM jobs             
+WHERE job_id IN                 
+(SELECT job_id FROM job_history                  
+WHERE department_id                   
+BETWEEN 50 AND 100)             
+GROUP BY job_id);
+
+
+https://www.w3resource.com/sql/subqueries/nested-subqueries.php
